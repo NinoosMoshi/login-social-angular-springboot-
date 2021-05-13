@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "login-social-angular"
+    }
+  },
+  "defaultProject": "login-social-angular",
+  "cli": {
+    "analytics": "b74508fb-acb6-4b2f-8e05-1e1a8f8436b9"
+  }
 }
