@@ -8,6 +8,9 @@ import com.google.api.client.util.Value;
 import com.ninos.dto.TokenDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +43,15 @@ public class GoogleController {
         // carry the token
         GoogleIdToken.Payload payload = googleIdToken.getPayload();
         return new ResponseEntity<>(payload, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/facebook")
+    public ResponseEntity<?> loginWithFacebook(@RequestBody TokenDTO tokenDTO)  {
+        Facebook facebook = new FacebookTemplate(tokenDTO.getToken());
+        String data[] = {"name", "email", "picture"};
+        User user = facebook.fetchObject("me", User.class,data);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
