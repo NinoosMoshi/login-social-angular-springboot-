@@ -5,10 +5,12 @@ import com.ninos.model.UserPrincipal;
 import com.ninos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -18,16 +20,10 @@ public class UserService {
     }
 
 
-    public UserDetails loadByEmail(String email){
-      User user = userRepository.findUserByEmail(email);
-      UserPrincipal userPrincipal = new UserPrincipal(user);
-      return userPrincipal;
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(email);
+        UserPrincipal userPrincipal = new UserPrincipal(user);
+        return userPrincipal;
     }
-
-
-
-
-
-
-
 }
