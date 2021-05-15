@@ -21,7 +21,7 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api")
-public class GoogleController {
+public class GoogleFacebookController {
 
     @Value("${google.id}")
     private String idClient;
