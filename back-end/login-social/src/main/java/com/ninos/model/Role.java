@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,7 +29,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")
-    List<User> users = new ArrayList<>();
+    Set<User> users = new HashSet<>();
 
 
 }
