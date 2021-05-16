@@ -1,10 +1,14 @@
 package com.ninos.config;
 
+import com.ninos.config.jwt.JwtAuthorizationFilter;
+import com.ninos.repository.UserRepository;
 import com.ninos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,12 +22,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SpringConfig extends WebSecurityConfigurerAdapter {
 
+    private UserRepository userRepository;
     private UserService userService;
 
     @Autowired
-    public SpringConfig(UserService userService) {
+    public SpringConfig(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
         this.userService = userService;
     }
+
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -31,13 +40,22 @@ public class SpringConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),userRepository))
                 .authorizeRequests()
+                .antMatchers("/auth/login")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
     }
 
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
