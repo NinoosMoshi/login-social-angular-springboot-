@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     public User findUserByEmail(String email);
+
+    public boolean existsByEmail(String email);  // this method take email and check it if it's exist in database or not
 }

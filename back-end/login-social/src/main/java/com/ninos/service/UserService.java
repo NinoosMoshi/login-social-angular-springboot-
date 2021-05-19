@@ -26,4 +26,19 @@ public class UserService implements UserDetailsService {
         UserPrincipal userPrincipal = new UserPrincipal(user);
         return userPrincipal;
     }
+
+
+    public boolean ifEmailExist(String email){
+        return userRepository.existsByEmail(email);
+    }
+
+    public User getUserByEmail(String email){
+        return userRepository.findUserByEmail(email);
+    }
+
+    public User saveUser(User user){
+        return userRepository.save(user);
+    }
+
+
 }
