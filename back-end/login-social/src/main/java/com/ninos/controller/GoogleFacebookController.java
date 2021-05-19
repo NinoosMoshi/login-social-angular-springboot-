@@ -85,8 +85,6 @@ public class GoogleFacebookController {
         jwtLogin.setPassword(password);
 
         ///////////////
-
-
         return new ResponseEntity<LoginResponse>(tokenService.login(jwtLogin), HttpStatus.OK);
     }
 
@@ -102,11 +100,28 @@ public class GoogleFacebookController {
 
 
     @PostMapping("/facebook")
-    public ResponseEntity<?> loginWithFacebook(@RequestBody TokenDTO tokenDTO)  {
+    public ResponseEntity<LoginResponse> loginWithFacebook(@RequestBody TokenDTO tokenDTO) throws Exception {
         Facebook facebook = new FacebookTemplate(tokenDTO.getToken());
-        String data[] = {"name", "email", "picture"};
+        String data[] = {"email"};
         User user = facebook.fetchObject("me", User.class,data);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        String email = user.getEmail();
+        com.ninos.model.User userFace = new com.ninos.model.User();
+        if(userService.ifEmailExist(email)){
+            userFace = userService.getUserByEmail(email);
+            System.out.println("===> Email is Exist");
+        }else{
+            userFace = createUser(email);
+            System.out.println("===> Email is NOT Exist");
+        }
+
+        ////////////////
+        JwtLogin jwtLogin = new JwtLogin();
+        jwtLogin.setEmail(user.getEmail());
+        jwtLogin.setPassword(password);
+
+        ///////////////
+        return new ResponseEntity<LoginResponse>(tokenService.login(jwtLogin), HttpStatus.OK);
     }
 
 
