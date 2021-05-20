@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SocialComponent } from './components/social/social.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {GoogleLoginProvider,FacebookLoginProvider} from 'angularx-social-login';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {GoogleLoginProvider,FacebookLoginProvider} from 'angularx-social-login';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocialLoginModule
+    SocialLoginModule,
+    HttpClientModule
   ],
   providers: [
     {
