@@ -1,0 +1,18 @@
+<div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let temp of students">
+          <td>{{temp.id}}</td>
+          <td>{{temp.name}}</td>
+          <td>{{temp.age}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

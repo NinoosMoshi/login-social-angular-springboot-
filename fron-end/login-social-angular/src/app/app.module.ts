@@ -10,6 +10,8 @@ import { SocialComponent } from './components/social/social.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {GoogleLoginProvider,FacebookLoginProvider} from 'angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
+import { StudentsComponent } from './components/students/students.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     HomeComponent,
     ProfileComponent,
-    SocialComponent
+    SocialComponent,
+    StudentsComponent,
+
   ],
   imports: [
     BrowserModule,

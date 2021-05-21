@@ -14,16 +14,22 @@ export class SocialService {
 
    // http://localhost:8080/social/google
    loginWithGoogle(token: string): Observable<any>{
-     return this.http.post(`${this.baseUrl}/google`, {token}).pipe(
-       map(response => response)
+     return this.http.post<any>(`${this.baseUrl}/google`, {token}).pipe(
+       map(response => {
+         sessionStorage.setItem('token','Bearer ' + response.token);
+         return response
+       })
      );
    }
 
 
    // http://localhost:8080/social/facebook
    loginWithFacebook(token: string): Observable<any>{
-    return this.http.post(`${this.baseUrl}/facebook`, {token}).pipe(
-      map(response => response)
+    return this.http.post<any>(`${this.baseUrl}/facebook`, {token}).pipe(
+      map(response =>{
+        sessionStorage.setItem('token','Bearer ' + response.token);
+        return response;
+      } )
     );
   }
 
